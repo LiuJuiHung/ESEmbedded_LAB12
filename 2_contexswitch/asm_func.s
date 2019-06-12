@@ -20,7 +20,7 @@ start_user:
 .global systick_handler
 systick_handler:
 	//save lr (EXC_RETURN) to main stack
-	??????
+	push	{lr}
 
 	//save r4-r11 to user stack
 	mrs	r0,	psp
@@ -31,12 +31,12 @@ systick_handler:
 	//psp of the next task is now in r0
 
 	//restore r4~r11 from stack of the next task
-	??????
+	ldmia	r0!,	{r4-r11}
 
 	//modify psp
-	??????
+	msr	psp, r0
 
 	//restore lr (EXC_RETURN)
-	??????
+	pop	{lr}
 
 	bx	lr
